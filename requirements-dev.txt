@@ -1,3 +1,4 @@
 # Extra packages for development only. Render does not install this file.
 -r requirements.txt
 pytest==9.1.1
+PyYAML==6.0.3
