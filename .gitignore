@@ -132,3 +132,7 @@ dmypy.json
 .pyre/
 
 model/
+
+# Local database files (never commit them)
+*.db
+*.sqlite
