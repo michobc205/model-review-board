@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}New review | Model Review Board{% endblock %}
+
+{% block content %}
+<h1>New review</h1>
+
+{% if errors %}
+<div class="error-summary" role="alert">
+  <p><strong>The review was not saved.</strong> Please fix the {{ errors|length }} problem{{ "s" if errors|length != 1 }} below.</p>
+</div>
+{% endif %}
+
+<form method="post" action="{{ url_for('main.new_review') }}" novalidate>
+  <div class="field">
+    <label for="case_reference">Case reference</label>
+    <input id="case_reference" name="case_reference" type="text" maxlength="100"
+           value="{{ values.get('case_reference', '') }}"
+           {% if errors.case_reference %}aria-invalid="true" aria-describedby="case_reference_error"{% endif %}>
+    {% if errors.case_reference %}<p class="error" id="case_reference_error">{{ errors.case_reference }}</p>{% endif %}
+  </div>
+
+  <div class="field">
+    <label for="prediction">Prediction</label>
+    <input id="prediction" name="prediction" type="text" maxlength="200"
+           value="{{ values.get('prediction', '') }}"
+           {% if errors.prediction %}aria-invalid="true" aria-describedby="prediction_error"{% endif %}>
+    {% if errors.prediction %}<p class="error" id="prediction_error">{{ errors.prediction }}</p>{% endif %}
+  </div>
+
+  <div class="field">
+    <label for="confidence">Confidence <span class="hint">(a number from 0 to 1)</span></label>
+    <input id="confidence" name="confidence" type="text" inputmode="decimal"
+           value="{{ values.get('confidence', '') }}"
+           {% if errors.confidence %}aria-invalid="true" aria-describedby="confidence_error"{% endif %}>
+    {% if errors.confidence %}<p class="error" id="confidence_error">{{ errors.confidence }}</p>{% endif %}
+  </div>
+
+  <div class="field">
+    <label for="input_summary">Short input summary</label>
+    <textarea id="input_summary" name="input_summary" rows="4" maxlength="1000"
+              {% if errors.input_summary %}aria-invalid="true" aria-describedby="input_summary_error"{% endif %}>{{ values.get('input_summary', '') }}</textarea>
+    {% if errors.input_summary %}<p class="error" id="input_summary_error">{{ errors.input_summary }}</p>{% endif %}
+  </div>
+
+  <p class="form-actions">
+    <button type="submit">Create review</button>
+    <a href="{{ url_for('main.dashboard') }}">Cancel</a>
+  </p>
+</form>
+{% endblock %}

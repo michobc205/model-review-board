@@ -1,7 +1,7 @@
 """Model Review Board: a small Flask app that stores reviews of model predictions."""
 import os
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 from .config import get_database_url
@@ -25,5 +25,13 @@ def create_app(test_config=None):
     from . import models  # noqa: F401  (registers the Review table)
     from .cli import register_commands
 
+    from .routes import bp
+
+    app.register_blueprint(bp)
     register_commands(app)
+
+    @app.errorhandler(404)
+    def not_found(error):
+        return render_template("404.html"), 404
+
     return app

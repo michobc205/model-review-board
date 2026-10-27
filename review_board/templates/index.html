@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | Model Review Board{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+
+<section class="totals" aria-label="Status totals">
+  <div class="total"><span class="number">{{ totals.all }}</span><span class="label">All reviews</span></div>
+  <div class="total pending"><span class="number">{{ totals.pending }}</span><span class="label">Pending</span></div>
+  <div class="total approved"><span class="number">{{ totals.approved }}</span><span class="label">Approved</span></div>
+  <div class="total rejected"><span class="number">{{ totals.rejected }}</span><span class="label">Rejected</span></div>
+</section>
+
+{% if reviews %}
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Case</th>
+        <th>Prediction</th>
+        <th class="num">Confidence</th>
+        <th>Input summary</th>
+        <th>Decision</th>
+        <th>Notes</th>
+        <th>Updated</th>
+        <th><span class="visually-hidden">Actions</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for review in reviews %}
+      <tr>
+        <td>{{ review.case_reference }}</td>
+        <td>{{ review.prediction }}</td>
+        <td class="num">{{ "%.2f"|format(review.confidence) }}</td>
+        <td>{{ review.input_summary }}</td>
+        <td><span class="badge {{ review.decision }}">{{ review.decision }}</span></td>
+        <td>{{ review.notes or "-" }}</td>
+        <td>{{ review.updated_at.strftime("%Y-%m-%d %H:%M") }}</td>
+        <td class="actions">
+          <a href="{{ url_for('main.edit_review', review_id=review.id) }}">Edit</a>
+          <a class="danger" href="{{ url_for('main.delete_review', review_id=review.id) }}">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<section class="empty">
+  <h2>No reviews yet</h2>
+  <p>When a model prediction needs a second look, add it here. Every decision and note is saved for the next reviewer.</p>
+  <p><a class="button" href="{{ url_for('main.new_review') }}">Create the first review</a></p>
+</section>
+{% endif %}
+{% endblock %}

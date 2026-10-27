@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Edit review | Model Review Board{% endblock %}
+
+{% block content %}
+<h1>Edit review {{ review.case_reference }}</h1>
+
+<dl class="summary">
+  <dt>Prediction</dt><dd>{{ review.prediction }}</dd>
+  <dt>Confidence</dt><dd>{{ "%.2f"|format(review.confidence) }}</dd>
+  <dt>Input summary</dt><dd>{{ review.input_summary }}</dd>
+</dl>
+
+{% if errors %}
+<div class="error-summary" role="alert">
+  <p><strong>The review was not saved.</strong> Please fix the {{ errors|length }} problem{{ "s" if errors|length != 1 }} below.</p>
+</div>
+{% endif %}
+
+<form method="post" action="{{ url_for('main.edit_review', review_id=review.id) }}" novalidate>
+  <div class="field">
+    <label for="decision">Decision</label>
+    <select id="decision" name="decision"
+            {% if errors.decision %}aria-invalid="true" aria-describedby="decision_error"{% endif %}>
+      {% for option in ["pending", "approved", "rejected"] %}
+      <option value="{{ option }}" {% if values.get('decision') == option %}selected{% endif %}>{{ option }}</option>
+      {% endfor %}
+    </select>
+    {% if errors.decision %}<p class="error" id="decision_error">{{ errors.decision }}</p>{% endif %}
+  </div>
+
+  <div class="field">
+    <label for="notes">Notes</label>
+    <textarea id="notes" name="notes" rows="5" maxlength="2000"
+              {% if errors.notes %}aria-invalid="true" aria-describedby="notes_error"{% endif %}>{{ values.get('notes', '') }}</textarea>
+    {% if errors.notes %}<p class="error" id="notes_error">{{ errors.notes }}</p>{% endif %}
+  </div>
+
+  <p class="form-actions">
+    <button type="submit">Save</button>
+    <a href="{{ url_for('main.dashboard') }}">Cancel</a>
+  </p>
+</form>
+{% endblock %}

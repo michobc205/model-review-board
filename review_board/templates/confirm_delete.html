@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Delete review | Model Review Board{% endblock %}
+
+{% block content %}
+<h1>Delete review {{ review.case_reference }}?</h1>
+
+<p>This removes the review and its notes for good. It cannot be undone.</p>
+
+<dl class="summary">
+  <dt>Prediction</dt><dd>{{ review.prediction }}</dd>
+  <dt>Decision</dt><dd><span class="badge {{ review.decision }}">{{ review.decision }}</span></dd>
+  <dt>Notes</dt><dd>{{ review.notes or "-" }}</dd>
+</dl>
+
+<form method="post" action="{{ url_for('main.delete_review', review_id=review.id) }}">
+  <p class="form-actions">
+    <button class="danger" type="submit">Yes, delete this review</button>
+    <a href="{{ url_for('main.dashboard') }}">No, keep it</a>
+  </p>
+</form>
+{% endblock %}
