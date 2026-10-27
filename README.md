@@ -55,13 +55,18 @@ Then open `http://127.0.0.1:5000`. On macOS or Linux, use `.venv/bin/flask` inst
 | `review_board/` | The app: `models.py`, `routes.py`, `validation.py`, `config.py`, `cli.py`, `templates/`, `static/` |
 | `tests/` | The tests |
 | `render.yaml` | The Render Blueprint: one web service and one PostgreSQL database, both on the free plan |
-| `reports/deployment-notes.md` | Deployment notes and the reflection |
+| `reports/deployment-notes.md` | Deployment notes, evidence and the reflection |
+| `reports/evidence/` | Three pictures of the app pages from the deployment |
 | `Model-Review-Board.pptx` | The slides of the project (10 slides, written to be read without a presenter) |
 | `requirements.txt`, `requirements-dev.txt` | Packages for the app, and extra packages for development |
 
 ## Deployment
 
-`render.yaml` describes the web service and the database, and connects them with a managed `DATABASE_URL` (no copied credential). Both plans are `free` and written down explicitly. Free web services spin down after 15 minutes without traffic and have an ephemeral filesystem, which is why the data lives in PostgreSQL and not in a file. The state of the deployment and the cleanup are written in [`reports/deployment-notes.md`](reports/deployment-notes.md).
+`render.yaml` describes the web service and the database, and connects them with a managed `DATABASE_URL` (no copied credential). Both plans are `free` and written down explicitly. Free web services spin down after 15 minutes without traffic and have an ephemeral filesystem, which is why the data lives in PostgreSQL and not in a file.
+
+**Live app (free plan, test data only):** <https://model-review-board-pfo7.onrender.com>. The first load can take about a minute, because the free service goes to sleep. It stays online until about 24 November 2026, and then it is removed.
+
+The evidence (a review that survives a redeploy, the health check, the log lines, the slow first load, and the cost checks) is in [`reports/deployment-notes.md`](reports/deployment-notes.md), with pictures in `reports/evidence/`.
 
 ## About this repository
 
