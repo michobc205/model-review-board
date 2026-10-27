@@ -56,6 +56,7 @@ Then open `http://127.0.0.1:5000`. On macOS or Linux, use `.venv/bin/flask` inst
 | `tests/` | The tests |
 | `render.yaml` | The Render Blueprint: one web service and one PostgreSQL database, both on the free plan |
 | `reports/deployment-notes.md` | Deployment notes and the reflection |
+| `Model-Review-Board.pptx` | The slides of the project (10 slides, written to be read without a presenter) |
 | `requirements.txt`, `requirements-dev.txt` | Packages for the app, and extra packages for development |
 
 ## Deployment
