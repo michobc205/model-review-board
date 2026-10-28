@@ -64,7 +64,11 @@ Then open `http://127.0.0.1:5000`. On macOS or Linux, use `.venv/bin/flask` inst
 
 `render.yaml` describes the web service and the database, and connects them with a managed `DATABASE_URL` (no copied credential). Both plans are `free` and written down explicitly. Free web services spin down after 15 minutes without traffic and have an ephemeral filesystem, which is why the data lives in PostgreSQL and not in a file.
 
-**Live app (free plan, test data only):** <https://model-review-board-pfo7.onrender.com>. The first load can take about a minute, because the free service goes to sleep. It stays online until about 24 November 2026, and then it is removed.
+**Live app (free plan, test data only):** <https://model-review-board-pfo7.onrender.com>
+
+- **Available until about 24 November 2026**, when it is planned to be removed. The free database expires on **26 November 2026** at the latest, so **the link does not work after that date**. The evidence below stays in this repository.
+- The first load can take about a minute, because the free service goes to sleep after 15 minutes without traffic.
+- The app has no login. Please use made-up data only.
 
 The evidence (a review that survives a redeploy, the health check, the log lines, the slow first load, and the cost checks) is in [`reports/deployment-notes.md`](reports/deployment-notes.md), with pictures in `reports/evidence/`.
 
