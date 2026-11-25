@@ -1,10 +1,12 @@
 # Deployment notes
 
-**Status: deployed on Render with free plans, and intentionally retained until about 24 November 2026.** Everything below was observed in the real deployment. Times are in UTC unless the text says "local time" (Germany, one hour ahead).
+**Status: removed on 25 November 2026.** It was deployed on Render with free plans and kept until then. Everything below was observed in the real deployment, before the removal. Times are in UTC unless the text says "local time" (Germany, one hour ahead).
 
 ## 1. Public URL
 
 `https://model-review-board-pfo7.onrender.com`
+
+This address no longer works. The service was removed on 25 November 2026.
 
 The app holds made-up test data only. It has no login, so anyone who knows the address can use it. The first load can take about a minute (see section 4).
 
@@ -90,11 +92,14 @@ The data was not lost: the review was still there after the slow start.
 | The free monthly allowance | The billing page showed 0 of 750 free instance hours used before the deployment |
 | Render's access to GitHub | Limited to this one repository, with read access to the code |
 
-**Planned removal, about 24 November 2026:**
+**Removal, 25 November 2026:**
 
-1. Delete the web service `model-review-board` and the database `review-board-db` in the Render dashboard.
-2. Remove Render's access to the repository on GitHub.
-3. Write the date of the removal at the end of this section.
+1. The Blueprint `model-review-board-blueprint` was disconnected first, because Render would otherwise have created the resources again from `render.yaml`.
+2. The web service `model-review-board` and the database `review-board-db` were deleted in the Render dashboard.
+3. After that, the Render dashboard showed no services, no Blueprint and no environment groups. The billing page showed the Hobby plan, no card on file and no unbilled charges.
+4. On GitHub, no Render app is installed on the account any more, Render is not among the authorized OAuth apps, and the repository has no webhook. The Website field of the repository was already empty.
+5. The Render entry under the authorized GitHub apps was left in place. It shows "Never used".
+6. The evidence in this document stays. The file `render.yaml` stays as the record of what was built.
 
 ## 6. Reflection
 
